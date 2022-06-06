@@ -6,7 +6,7 @@ import axios from "axios";
 import UserContext from "../contexts/UserContext";
 
 export default function Modal({ form, membership, setModal }) {
-    const { API } = useContext(UserContext);
+    const { API, userData, setUserData, setArray } = useContext(UserContext);
     const userToken = localStorage.getItem("userToken");   
     // Logic
     const navigate = useNavigate();
@@ -18,7 +18,12 @@ export default function Modal({ form, membership, setModal }) {
         const body = {...form};
         
         const promise = axios.post(`${API}/subscriptions`, body, config);
-        promise.then(r => navigate("/home"))
+        promise.then(r => {
+            setUserData({
+                ...userData,
+                membership: {...r.data}
+            })
+            navigate("/home")})
         promise.catch(e => alert('Invalid data'))
     }
 

@@ -13,7 +13,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     
     // Logic
-    const { API, userData, setUserData } = useContext(UserContext);
+    const { API, userData, setUserData, setArray } = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -27,6 +27,9 @@ export default function LoginPage() {
                     password: "",
                     token: ""
                 })
+                setArray([
+                    ...r.data.membership.perks
+                ])
                 localStorage.setItem('userToken', r.data.token)
                 const redirect = (r.data.membership) ? "/home" : "/subscriptions";
                 navigate(redirect);

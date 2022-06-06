@@ -10,13 +10,15 @@ import SignupPage from "./Components/SignupPage";
 import SubscriptionsPage from "./Components/SubscriptionsPage";
 import Membership from "./Components/Membership";
 import MembershipPage from "./Components/MembershipPage";
+import Home from './Components/Home';
 
 export default function App() {
-    const [userData, setUserData] = useState({}); 
+    const [userData, setUserData] = useState({});
+    const [array, setArray] = useState([]) // To correct some bugs I with react lifecycle 
     const API = "https://mock-api.driven.com.br/api/v4/driven-plus";
 
     return (
-        <UserContext.Provider value={ {API, userData, setUserData} }>
+        <UserContext.Provider value={ {API, userData, setUserData, array, setArray} }>
             <Styles>
             <BrowserRouter>
                 <Routes>
@@ -24,6 +26,7 @@ export default function App() {
                     <Route path="/signup" element={ <SignupPage />} />
                     <Route path="/subscriptions" element={ <SubscriptionsPage /> } />
                     <Route path="/subscriptions/:MEMBERSHIP_ID" element={ <MembershipPage />} />
+                    <Route path="/home" element={ <Home />} />
                 </Routes>
             </BrowserRouter>
         </Styles>

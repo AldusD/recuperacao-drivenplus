@@ -25,7 +25,7 @@ export default function MembershipPage() {
     });
    
     // Logic
-    const { API } = useContext(UserContext);
+    const { API, setArray } = useContext(UserContext);
     const userToken = localStorage.getItem('userToken');
 
     const updateForm = e => { 
@@ -43,6 +43,7 @@ export default function MembershipPage() {
             console.log(r);
             setMembershipData({...r.data})
             setPerksArr([...r.data.perks])
+            setArray([...r.data.perks])
         })
         promise.catch(e => console.log(e))
     }, [])
