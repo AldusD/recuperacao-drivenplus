@@ -1,29 +1,36 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 
+import UserContext from '../contexts/UserContext';
 import logo from '../assets/main-logo.png';
 import Form from './Form';
 
-export default function LoginPage() {
+export default function LoginPage() {    
     // State Variables
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     
     // Logic
-    const API = "https://mock-api.driven.com.br/api/v4/driven-plus";
+    const { API, userData, setUserData } = useContext(UserContext);
+
+    const navigate = useNavigate();
 
     const login = e => {
         e.preventDefault();
         const body = {email, password};
         const promise = axios.post(`${API}/auth/login`, body);
         promise.then(r => {
-            console.log(body, r)
+                setUserData({
+                    ...r.data,
+                    password: ""
+                })
+                const redirect = (r.data.membership) ? "/home" : "/subscriptions";
+                navigate(redirect);
             })
-        promise.then(e => {
-                console.log(body)
-                console.log(e)
+        promise.catch(e => {
+                alert("Invalid entry data");
             })
     }
 

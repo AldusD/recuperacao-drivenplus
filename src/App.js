@@ -1,21 +1,33 @@
 import Styled from "styled-components";
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import './assets/reset.css';
 import './assets/bodyBackground.css';
+import UserContext from "./contexts/UserContext";
 import LoginPage from "./Components/LoginPage";
 import SignupPage from "./Components/SignupPage";
+import SubscriptionsPage from "./Components/SubscriptionsPage";
+import Membership from "./Components/Membership";
+import MembershipPage from "./Components/MembershipPage";
 
 export default function App() {
+    const [userData, setUserData] = useState({}); 
+    const API = "https://mock-api.driven.com.br/api/v4/driven-plus";
+
     return (
-        <Styles>
+        <UserContext.Provider value={ {API, userData, setUserData} }>
+            <Styles>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={ <LoginPage /> } />
                     <Route path="/signup" element={ <SignupPage />} />
+                    <Route path="/subscriptions" element={ <SubscriptionsPage /> } />
+                    <Route path="/subscriptions/:MEMBERSHIP_ID" element={ <MembershipPage />} />
                 </Routes>
             </BrowserRouter>
         </Styles>
+        </UserContext.Provider>
     );
 }
 
