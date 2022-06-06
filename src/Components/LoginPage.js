@@ -24,8 +24,10 @@ export default function LoginPage() {
         promise.then(r => {
                 setUserData({
                     ...r.data,
-                    password: ""
+                    password: "",
+                    token: ""
                 })
+                localStorage.setItem('userToken', r.data.token)
                 const redirect = (r.data.membership) ? "/home" : "/subscriptions";
                 navigate(redirect);
             })

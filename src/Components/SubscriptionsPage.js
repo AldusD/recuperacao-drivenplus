@@ -11,10 +11,11 @@ export default function SubscriptionsPage() {
 
     // Logic
     const { API, userData } = useContext(UserContext);
-
+    const userToken = localStorage.getItem('userToken');
+    
     useEffect(() => {
         const config = {
-            headers: { Authorization: `Bearer ${ userData.token }`}
+            headers: { Authorization: `Bearer ${ userToken }`}
         }
         const promise = axios.get(`${API}/subscriptions/memberships`, config)
         promise.then(r => {
